@@ -11,12 +11,9 @@ import java.util.List;
 @Setter
 @Entity
 @Builder
-public class Users {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Users extends BaseEntity {
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String email;
 
     private String firstName;

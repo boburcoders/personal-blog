@@ -11,10 +11,7 @@ import lombok.*;
 @Setter
 @Entity
 @Builder
-public class AuthUser {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class AuthUser extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String username;

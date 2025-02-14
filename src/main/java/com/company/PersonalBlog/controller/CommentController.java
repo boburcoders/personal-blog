@@ -16,8 +16,8 @@ public class CommentController {
 
     @PostMapping
     public HttpApiResponse<CommentDto> createComment(
-            @RequestParam(value = "file", required = false) MultipartFile file,
-            @RequestBody @Valid CommentDto dto) {
+            @RequestPart(value = "file", required = false) MultipartFile file,
+            @RequestPart("dto") @Valid CommentDto dto) {
         return this.commentService.createComment(dto, file);
     }
 

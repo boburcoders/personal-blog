@@ -5,4 +5,6 @@ public class CustomBadRequestExceptions extends RuntimeException {
     public CustomBadRequestExceptions(String message) {
         super(message);
     }
+
+
 }

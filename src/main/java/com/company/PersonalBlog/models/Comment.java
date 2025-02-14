@@ -9,10 +9,7 @@ import lombok.*;
 @Setter
 @Entity
 @Builder
-public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Comment extends BaseEntity {
     private String content;
     @Column(columnDefinition = "TEXT")
     private String body;
@@ -26,6 +23,6 @@ public class Comment {
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL
     )
-    @JoinColumn(nullable = false,name = "message_id")
+    @JoinColumn(nullable = false, name = "message_id")
     private Message message;
 }

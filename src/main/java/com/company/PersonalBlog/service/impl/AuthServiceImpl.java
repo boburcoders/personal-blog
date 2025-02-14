@@ -4,7 +4,9 @@ import com.company.PersonalBlog.dto.AuthUserDto;
 import com.company.PersonalBlog.dto.HttpApiResponse;
 import com.company.PersonalBlog.exceptions.CustomBadRequestExceptions;
 import com.company.PersonalBlog.models.AuthUser;
+import com.company.PersonalBlog.models.Users;
 import com.company.PersonalBlog.repository.AuthUserRepository;
+import com.company.PersonalBlog.repository.UserRepository;
 import com.company.PersonalBlog.service.AuthService;
 import com.company.PersonalBlog.service.JwtService;
 import com.company.PersonalBlog.service.mapper.AuthUserMapper;
@@ -25,25 +27,32 @@ public class AuthServiceImpl implements AuthService {
     private final JwtService jwtService;
     private final AuthUserRepository authUserRepository;
     private final AuthUserMapper authUserMapper;
+    private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     @Override
     public HttpApiResponse<AuthUserDto> createAuthUser(AuthUserDto dto) {
         try {
             dto.setPassword(encoder.encode(dto.getPassword()));
+            AuthUser authUser = this.authUserMapper.toEntity(dto);
+
+            Users user = Users.builder()
+                    .authUser(authUser)
+                    .build();
+            userRepository.save(user);
+
+            AuthUserDto savedDto = this.authUserMapper.toDto(authUser);
+
             return HttpApiResponse.<AuthUserDto>builder()
-                    .message("OK")
+                    .message("User created successfully")
                     .code(HttpStatus.OK.value())
-                    .content(this.authUserMapper.toDto(
-                            this.authUserRepository.saveAndFlush(
-                                    this.authUserMapper.toEntity(dto)
-                            )
-                    ))
+                    .content(savedDto)
                     .build();
         } catch (Exception e) {
-            throw new CustomBadRequestExceptions(e.getMessage());
+            throw new CustomBadRequestExceptions("Failed to create user: " + e.getMessage());
         }
     }
+
 
     @Override
     public HttpApiResponse<AuthUserDto> getAuthUserById(Integer id) {

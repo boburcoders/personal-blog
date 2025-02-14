@@ -4,8 +4,10 @@ import com.company.PersonalBlog.models.Comment;
 import com.company.PersonalBlog.models.Message;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.List;
 

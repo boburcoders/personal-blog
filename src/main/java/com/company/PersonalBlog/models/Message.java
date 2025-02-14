@@ -11,11 +11,8 @@ import java.util.List;
 @Setter
 @Entity
 @Builder
-public class Message {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(nullable = false, columnDefinition = "TEXT")
+public class Message extends BaseEntity {
+    @Column(columnDefinition = "TEXT")
     private String content;
     @Column(columnDefinition = "TEXT")
     private String text;

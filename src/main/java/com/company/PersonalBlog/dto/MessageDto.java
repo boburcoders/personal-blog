@@ -19,7 +19,6 @@ public class MessageDto {
     private String content;
     private String text;
     @NotNull(message = "UserId must not be null")
-    @NotEmpty(message = "UserId must not be empty")
     private Integer userId;
     private List<CommentDto> comments;
 }

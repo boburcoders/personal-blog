@@ -39,8 +39,13 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(requests -> requests
-                        .requestMatchers("auth/register", "auth/login").permitAll()  // not require password and username
+                        .requestMatchers("auth/register",
+                                "auth/login",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html").permitAll()// not require password and username
                         .anyRequest().authenticated())
+                .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())  // authorize any request
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(customizer -> customizer.disable())
@@ -48,6 +53,15 @@ public class SecurityConfiguration {
         return http.build();
 
     }
+
+    private final static String[] Auth_Whitelist = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/api/v1/auth/**",
+            "/v3/api-docs.yaml",
+            "/v3/api-docs/"
+    };
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {

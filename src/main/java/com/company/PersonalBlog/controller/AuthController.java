@@ -2,14 +2,9 @@ package com.company.PersonalBlog.controller;
 
 import com.company.PersonalBlog.dto.AuthUserDto;
 import com.company.PersonalBlog.dto.HttpApiResponse;
-import com.company.PersonalBlog.repository.AuthUserRepository;
 import com.company.PersonalBlog.service.AuthService;
-import com.company.PersonalBlog.service.JwtService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
